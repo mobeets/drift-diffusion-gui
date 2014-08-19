@@ -26,9 +26,9 @@ var svg = d3.select("#chart").append("svg")
     .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
 var allData;
-var curS = 1;
-var curK = 1;
-var curA = 1;
+var curS;
+var curK;
+var curA;
 
 // var legend = svg.selectAll(".legend")
 //   .data(color.domain())
@@ -92,7 +92,7 @@ function initData(data) {
 
 }
 
-function showData (data) {
+function showData(data) {
   var circle = svg.selectAll(".dot").data(data);
   circle.enter().append("circle")
       .attr("class", "dot")
@@ -102,21 +102,12 @@ function showData (data) {
       .style("fill", function(d) { return color(1); }); // color(d.species);  
   circle.exit().remove();
   console.log([curS, curK, curA]);
-  console.log(data);
 }
 
 function filterAndShowData() {
   curData = allData.filter(function (d) { return (d.S == curS) && (d.K == curK) && (d.A == curA); });
   showData(curData);
 }
-
-function loadData(error, data) {
-  allData = data;
-  initData(allData);
-  filterAndShowData();
-}
-
-d3.csv("static/data.csv", loadData);
 
 function updateS(evt, value) {
   curS = +value;
@@ -132,17 +123,27 @@ function updateA(evt, value) {
 }
 
 function initSliderS(id) {
+  curS = 1;
   d3.select(id).call(d3.slider().min(1).max(4).step(1).on("slide", updateS));
 }
 function initSliderK(id) {
+  curK = 1;
   d3.select(id).call(d3.slider().min(1).max(4).step(1).on("slide", updateK));
 }
 function initSliderA(id) {
+  curA = 1;
   d3.select(id).call(d3.slider().min(1).max(4).step(1).on("slide", updateA));
+}
+
+function loadData(error, data) {
+  allData = data;
+  initData(allData);
+  filterAndShowData();
 }
 
 $(function() {
     initSliderS('#slider1');
     initSliderK('#slider2');
     initSliderA('#slider3');
+    d3.csv("static/data.csv", loadData);
 });
