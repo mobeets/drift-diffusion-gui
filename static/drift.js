@@ -153,6 +153,11 @@ function loadData(error, data) {
   allData = data;
   initData(allData);
   $.when(initBounds()).then(initSliders());
+  console.log(allData);
+  $('#nparticles').html(allData[0].N);
+  $('#stimulus').html(allData[0].cohs);
+  $('#timesteps').html(allData[0].T);
+  $('#timedelay').html(allData[0].TND);
   filterAndShowData();
 }
 

@@ -26,10 +26,12 @@
         <title>Drift diffusion psychophysics</title>
     </head>
     <body>
+        <a href="https://github.com/mobeets/drift-diffusion-gui"><img style="position: absolute; top: 0; right: 0; border: 0;" src="https://camo.githubusercontent.com/38ef81f8aca64bb9a64448d0d70f1308ef5341ab/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f72696768745f6461726b626c75655f3132313632312e706e67" alt="Fork me on GitHub" data-canonical-src="https://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png"></a>
         <div id="wrapper">
-            <!-- <span class="byline">&#10555; <a href="http://www.jehosafet.com" target="_blank">Jehosafet</a></span> -->
+            <span class="byline">&#10555; <a href="http://www.jehosafet.com" target="_blank">Jehosafet</a></span>
             <div id="content">
-                <h1>Drift diffusion simulation</h1>
+                <h1>Drift diffusion psychophysics</h1>
+                <div id="chart"></div>
                 <div id="sliders">
                     <div class="slider-wrapper">
                         <span class="slider-name">diffusion rate:</span>
@@ -47,7 +49,22 @@
                         <div id="slider3"></div>
                     </div>
                 </div>
-                <div id="chart"></div>
+                <p class="info">
+                    Each point represents a 75% coherence threshold for a set of simulated 2AFC trials, where the accuracy on each trial is given by a drift diffusion process with the following parameters:
+                </p>
+                <ul class="info">
+                    <li># particles = <span id="nparticles" class="data-val"></span></li>
+                    <li># timesteps = <span id="timesteps" class="data-val"></span></li>
+                    <li>initial timesteps with zero drift rate = <span id="timedelay" class="data-val"></span></li>
+                    <li>stimulus strengths = <span id="stimulus" class="data-val"></span></li>
+                </ul>
+                <p class="info">
+                    The drift rate on a given trial is the stimulus strength times the drift rate multiplier, while the diffusion rate is the same in all trials.
+                </p>
+                <img src="images/particles.png">
+                <p class="info">
+                    Above, an example of the drift diffusion of 500 particles for 100 timesteps, where warmer colors represent higher drift rates, and all particles have the same diffusion rate. For more information check <a href="https://github.com/mobeets/drift-diffusion">this</a> out.
+                </p>
             </div>
         </div>
         <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js" ></script>

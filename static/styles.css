@@ -8,7 +8,7 @@ body {
   width: 90%;
   max-width: 600px;
   margin-top: 20px;
-  margin-bottom: 20px;
+  margin-bottom: 80px;
   -webkit-border-radius: 8px;
   -moz-border-radius: 8px;
   border-radius: 8px;
@@ -40,8 +40,17 @@ a {
 
 h1 {
   font-family: Garamond, Georgia, serif;
-  font-weight: bold;
+  font-weight: normal;
 }
+#wrapper img {
+  width: 80%;
+}
+
+.info {
+  float: left;
+  /*display: inline-block;*/
+}
+
 
 .slider-param {
   display: none;
@@ -60,11 +69,12 @@ h1 {
   margin: 10px;
   width: 100px;
 }
-.slider-name, .slider-val {
+.slider-name, .slider-val, .label {
   font-size: 80%;
 }
 #chart {
-  width: 40%;
+  width: 70%;
+  overflow: hidden;
   float: left;
 }
 .line {
