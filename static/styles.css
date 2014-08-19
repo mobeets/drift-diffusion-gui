@@ -1,0 +1,51 @@
+body {
+  font-family: 'Droid Serif', serif;
+}
+#wrapper {
+  background-color: white;
+  margin: 0 auto; /* centers */
+  display: table; /* takes width of children */
+  width: 600px;
+  margin-top: 20px;
+  margin-bottom: 20px;
+  -webkit-border-radius: 8px;
+  -moz-border-radius: 8px;
+  border-radius: 8px;
+}
+#content {
+  margin-top: 5px;
+  margin-left: 20px;
+  margin-right: 20px;
+  border-top: 1px solid black;
+  overflow: hidden;
+  width: 100%;
+  display: block;
+}
+a:visited {
+  color: inherit;
+}
+a {
+  color: black;
+}
+.byline {
+  float: right;
+  font-size: 80%;
+  display: block;
+}
+.byline a {
+  text-decoration: none;
+  border-bottom: dotted 1px black;
+}
+
+h1 {
+  font-family: Garamond, Georgia, serif;
+  font-weight: bold;
+}
+
+.slider-param {
+  display: none;
+}
+.d3-slider {
+  margin: 10px;
+  width: 100px;
+}
