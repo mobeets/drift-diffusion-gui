@@ -1,22 +1,22 @@
 var margin = {top: 20, right: 20, bottom: 30, left: 50},
-    width = 500 - margin.left - margin.right,
+    width = 400 - margin.left - margin.right,
     height = 300 - margin.top - margin.bottom;
 
-var x = d3.scale.log()
-    .range([0, width]);
+var xScale = d3.scale.log().range([0, width]);
+var yScale = d3.scale.log().range([height, 0]);
 
-var y = d3.scale.log()
-    .range([height, 0]);
-
-var color = d3.scale.category10();
+var xValue = function(d) { return d.i; }
+var yValue = function(d) { return d.thresh; }
+var xMap = function(d) { return xScale(xValue(d));}
+var yMap = function(d) { return yScale(yValue(d));}
 
 var xAxis = d3.svg.axis()
-    .scale(x)
+    .scale(xScale)
     .ticks(5, ",.1s")
     .orient("bottom");
 
 var yAxis = d3.svg.axis()
-    .scale(y)
+    .scale(yScale)
     .ticks(5, ",.1s")
     .orient("left");
 
@@ -25,6 +25,8 @@ var svg = d3.select("#chart").append("svg")
     .attr("height", height + margin.top + margin.bottom)
   .append("g")
     .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
+var color = d3.scale.category10();
 
 var allData;
 var curS;
@@ -72,8 +74,8 @@ function initData(data) {
       .style("text-anchor", "end")
       .text("threshold");
 
-  x.domain(d3.extent(data, function(d) { return d.i; })).nice();
-  y.domain(d3.extent(data, function(d) { return d.thresh; })).nice();
+  xScale.domain(d3.extent(data, xValue)).nice();
+  yScale.domain(d3.extent(data, yValue)).nice();
   
 }
 
@@ -83,8 +85,8 @@ function showData(data) {
   circle.enter().append("circle")
       .attr("class", "dot")
       .attr("r", 3.5)
-      .attr("cx", function(d) { return x(d.i); })
-      .attr("cy", function(d) { return y(d.thresh); })
+      .attr("cx", xMap)
+      .attr("cy", yMap)
       .style("fill", function(d) { return color(1); });
 
   circle.exit().remove();
@@ -94,8 +96,8 @@ function showData(data) {
     .duration(400)
       .attr("class", "dot")
       .attr("r", 3.5)
-      .attr("cx", function(d) { return x(d.i); })
-      .attr("cy", function(d) { return y(d.thresh); })
+      .attr("cx", xMap)
+      .attr("cy", yMap)
       .style("fill", function(d) { return color(1); });
 }
 
