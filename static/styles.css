@@ -27,12 +27,17 @@ a:visited {
 a {
   color: black;
 }
-.byline {
+.byline, .endline {
   width: 100%;
   font-size: 80%;
   display: block;
   text-align: right;
+}
+.byline {
   border-bottom: 1px solid black;
+}
+.endline {
+  border-top: 1px solid black;
 }
 .byline a {
   text-decoration: none;
