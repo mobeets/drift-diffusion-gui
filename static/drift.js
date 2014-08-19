@@ -107,24 +107,30 @@ function filterAndShowData() {
 function updateS(evt, value) {
   curS = +value;
   filterAndShowData();
+  $('#s1val').html(curS);
 }
 function updateK(evt, value) {
   curK = +value;
   filterAndShowData();
+  $('#s2val').html(curK);
 }
 function updateA(evt, value) {
   curA = +value;
   filterAndShowData();
+  $('#s3val').html(curA);
 }
 
 function initSliderS(id) {
   d3.select(id).call(d3.slider().min(curS).max(maxS).step(1).on("slide", updateS));
+  $('#s1val').html(curS);
 }
 function initSliderK(id) {
   d3.select(id).call(d3.slider().min(curK).max(maxK).step(1).on("slide", updateK));
+  $('#s2val').html(curK);
 }
 function initSliderA(id) {
   d3.select(id).call(d3.slider().min(curA).max(maxA).step(1).on("slide", updateA));
+  $('#s3val').html(curA);
 }
 function initSliders() {
   initSliderS('#slider1');
@@ -132,7 +138,7 @@ function initSliders() {
   initSliderA('#slider3');
 }
 
-function initBounds(data) {
+function initBounds() {
   curS = d3.min(allData, function(d) { return d.S; });
   curK = d3.min(allData, function(d) { return d.K; });
   curA = d3.min(allData, function(d) { return d.A; });
@@ -144,10 +150,10 @@ function initBounds(data) {
 function loadData(error, data) {
   allData = data;
   initData(allData);
-  initBounds(allData);
+  $.when(initBounds()).then(initSliders());
   filterAndShowData();
 }
 
 $(function() {
-  $.when(d3.csv("static/data.csv", loadData)).then(initSliders());
+  d3.csv("static/data.csv", loadData);
 });
