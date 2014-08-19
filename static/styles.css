@@ -45,6 +45,13 @@ h1 {
 .slider-param {
   display: none;
 }
+.d3-slider-wrapper {
+  margin-bottom: 10px;
+  margin-left: 10px;
+  overflow: hidden;
+  float: left;
+  /*display: block;  */
+}
 .d3-slider {
   margin: 10px;
   width: 100px;
