@@ -36,21 +36,22 @@ var maxS;
 var maxK;
 var maxA;
 
+function prepData(d) {
+  // T,TND,N,S,K,A,i,thresh
+  d.T = +d.T;
+  d.TND = +d.TND;
+  d.N = +d.N;
+  d.S = +d.S;
+  d.K = +d.K;
+  d.A = +d.A;
+  d.i = (+d.i + 1)*1000; // values play nice with log
+  d.thresh = (+d.thresh + 1)*100; // values play nice with log
+  if (isNaN(d.thresh)) {
+    d.thresh = 1;
+  }
+}
+
 function initData(data) {
-  data.forEach(function(d) {
-    // T,TND,N,S,K,A,i,thresh
-    d.T = +d.T;
-    d.TND = +d.TND;
-    d.N = +d.N;
-    d.S = +d.S;
-    d.K = +d.K;
-    d.A = +d.A;
-    d.i = (+d.i + 1)*1000;
-    d.thresh = (+d.thresh)*100;
-    if (isNaN(d.thresh)) {
-      d.thresh = "1";
-    }
-  });
 
   svg.append("g")
       .attr("class", "x axis")
@@ -102,8 +103,7 @@ function showData(data) {
 }
 
 function filterAndShowData() {
-  curData = allData.filter(function (d) { return (d.S == curS) && (d.K == curK) && (d.A == curA); });
-  showData(curData);
+  showData(allData.filter(function (d) { return (d.S == curS) && (d.K == curK) && (d.A == curA); }));
 }
 
 function updateS(evt, value) {
@@ -139,21 +139,21 @@ function initSliders() {
   initSliderK('#slider2');
   initSliderA('#slider3');
 }
-
-function initBounds() {
-  curS = d3.min(allData, function(d) { return d.S; });
-  curK = d3.min(allData, function(d) { return d.K; });
-  curA = d3.min(allData, function(d) { return d.A; });
-  maxS = d3.max(allData, function(d) { return d.S; });
-  maxK = d3.max(allData, function(d) { return d.K; });
-  maxA = d3.max(allData, function(d) { return d.A; });
+function initBounds(data) {
+  curS = d3.min(data, function(d) { return d.S; });
+  curK = d3.min(data, function(d) { return d.K; });
+  curA = d3.min(data, function(d) { return d.A; });
+  maxS = d3.max(data, function(d) { return d.S; });
+  maxK = d3.max(data, function(d) { return d.K; });
+  maxA = d3.max(data, function(d) { return d.A; });
   console.log([curS, curK, curA, maxS, maxK, maxA]);
 }
-function loadData(error, data) {
-  allData = data;
-  initData(allData);
-  $.when(initBounds()).then(initSliders());
-  console.log(allData);
+
+function loadData(data) {
+  // allData = data;
+  // initData();
+  // $.when(initData(allData)).then();
+  $.when(initBounds(data)).then(initData(data)).then(initSliders());
   $('#nparticles').html(allData[0].N);
   $('#stimulus').html(allData[0].cohs);
   $('#timesteps').html(allData[0].T);
@@ -162,5 +162,9 @@ function loadData(error, data) {
 }
 
 $(function() {
-  d3.csv("static/data.csv", loadData);
+  d3.csv("static/data.csv", function (error, data) {
+    data.forEach(prepData);
+    allData = data;
+    loadData(allData);
+  });
 });
